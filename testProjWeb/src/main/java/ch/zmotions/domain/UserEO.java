@@ -7,7 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.support.JpaPersistableEntityInformation;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @FilterDef(name="ageFilter", parameters = @ParamDef(name="ageParam", type="integer"))
@@ -26,6 +28,10 @@ public class UserEO{
 
     @Column
     private Integer alter;
+
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true, targetEntity = RoleEO.class)
+    @JoinColumn(name = "id")
+    private RoleEO role;
 
     public UserEO() {
         this.vorname = "Muster";
@@ -65,5 +71,13 @@ public class UserEO{
 
     public Long getPk() {
         return pk;
+    }
+
+    public RoleEO getRole() {
+        return role;
+    }
+
+    public void setRole(RoleEO role) {
+        this.role = role;
     }
 }

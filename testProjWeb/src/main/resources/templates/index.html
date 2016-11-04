@@ -8,12 +8,14 @@
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/custom.css}" href="../../public/css/custom.css"/>
 </head>
 <body>
-<div id="mainContainer" class="row">
+<div id="mainContainer">
+    <!--Title-->
     <div class="row">
-        <h1 class="col-md-8">Available Users</h1>
-        <input id="ageFilter" name="ageFilter" class="col-md-2" type="number"/>
-        <button id="filter-button">Set Filter</button>
+        <h1 class="col-sm-8">Available Users</h1>
+        <input id="ageFilter" name="ageFilter" class="col-sm-2" type="number"/>
+        <button class="col-sm-2" id="filter-button">Set Filter</button>
     </div>
+    <!-- New User Form-->
     <div class="row">
         <form id="newUserForm" action="javascript:void(0)">
             <div class="form-group">
@@ -33,11 +35,41 @@
             </div>
         </form>
     </div>
+    <!--User List Display-->
     <div th:fragment = "content" id="list">
-        <div class="row" th:each="user : ${users}">
-            <div class="col-md-4" th:text="${user.vorname}"></div>
-            <div class="col-md-4" th:text="${user.nachname}"></div>
-            <div class="col-md-4" th:text="${user.alter}"></div>
+        <div class="userbox" th:each="user : ${users}">
+            <!--User Info-->
+            <div class="row">
+                <input type="hidden" th:value="${user.pk}" />
+                <div class="col-sm-2" th:text="${user.vorname}"></div>
+                <div class="col-sm-2" th:text="${user.nachname}"></div>
+                <div class="col-sm-1" th:text="${user.alter}"></div>
+                <div class="col-sm-7">
+                    <select id="roleSelect" class="col-sm-8">
+                        <div th:each="role : ${roles}">
+                            <option th:value="${role.name}" th:text="${role.name}"></option>
+                        </div>
+                    </select>
+                    <button class="col-sm-4 js-assignRole">Assign Role</button>
+                </div>
+            </div>
+            <!--Table of Roles, if User has roles-->
+            <table class="row table" th:if="${user.role} != null">
+                <thead>
+                    <tr>
+                        <th>Rolename</th>
+                        <th>Code</th>
+                        <th>Enabled</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td th:text="${user.role.name}"></td>
+                        <td th:text="${user.role.code}"></td>
+                        <td th:text="${user.role.enabled}"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

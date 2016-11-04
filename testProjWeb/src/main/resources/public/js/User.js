@@ -12,6 +12,7 @@ UserController.prototype.saveUser = function(){
         url:"/users",
         method: "POST",
         data: form.serialize(),
+        cache:false,
         success: function(pResult){
             $('#list').html(pResult);
         }
@@ -24,9 +25,21 @@ UserController.prototype.setFilter = function () {
         url:"/users",
         method: "GET",
         data: "ageFilter=" + ageFilter,
+        cache:false,
         success: function(pResult){
             $('#list').html(pResult);
         }
+    })
+};
+
+UserController.prototype.assignRole = function () {
+    var selectedRole = $( "#roleSelect").find("option:selected" ).text();
+    var selectedUserId = $(this).parent().parent().find("input").val();
+    $.ajax({
+        url:"/users/" + selectedUserId,
+        method: "POST",
+        data: "role=" + selectedRole,
+        cache:false
     })
 };
 
@@ -34,4 +47,5 @@ var userController = new UserController();
 
 $('#submit').on("click",userController.saveUser);
 $('#filter-button').on("click",userController.setFilter);
+$('.js-assignRole').on("click",userController.assignRole);
 
