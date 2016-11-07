@@ -33,11 +33,13 @@ public class IndexController {
 
     @RequestMapping(value="/users", method = RequestMethod.GET)
     public String showUsers(Model model, String ageFilter){
+        setModel(model);
         if(ageFilter !=null){
             ageFilterParam = new Integer(ageFilter);
+            return "index :: content";
+        }else{
+            return "index";
         }
-        setModel(model);
-        return "index";
     }
 
     @RequestMapping(value="/users", method = RequestMethod.POST)
@@ -48,12 +50,12 @@ public class IndexController {
     }
 
     @RequestMapping(value="/users/{userid}", method = RequestMethod.POST)
-    public String updateUser(Model model, String role, @PathVariable("userid") Long id){
+    public String updateRole(Model model, String role, @PathVariable("userid") Long id){
         UserEO editedUser = userRepository.findByPk(id);
         editedUser.setRole(roleRepository.findByName(role));
         userRepository.save(editedUser);
         setModel(model);
-        return index();
+        return "index :: content";
     }
 
     /**
@@ -63,7 +65,7 @@ public class IndexController {
     * */
     private void setModel(Model model) {
         if(ageFilterParam == null){
-            model.addAttribute("users", userRepository.fullFetch());
+            model.addAttribute("users",userRepository.fullFetch());
             model.addAttribute("roles",roleRepository.fullFetch());
         }else{
             ageFilterParam = new Integer(ageFilterParam);

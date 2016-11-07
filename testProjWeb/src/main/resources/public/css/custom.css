@@ -4,10 +4,25 @@ body{
 
 #mainContainer{
     margin: 0 auto;
-    width:600px;
+    width:550px;
 }
-#js-assignRole{
+.js-assignRole{
     height:25px;
+}
+
+select{
+    height:25px;
+}
+
+#filter-button{
+    height:26px;
+}
+
+.userbox:nth-child(odd){
+    background: rgba(215, 223, 255, 0.2);
+}
+.userbox:nth-child(even){
+    background: rgba(255, 196, 218, 0.2);
 }
 
 .userbox{

@@ -11,9 +11,10 @@
 <div id="mainContainer">
     <!--Title-->
     <div class="row">
-        <h1 class="col-sm-8">Available Users</h1>
+        <h1 class="col-sm-6">Available Users</h1>
+        <label class="col-sm-2" for="ageFilter">Age Filter</label>
         <input id="ageFilter" name="ageFilter" class="col-sm-2" type="number"/>
-        <button class="col-sm-2" id="filter-button">Set Filter</button>
+        <button class="col-sm-2" id="filter-button">Set</button>
     </div>
     <!-- New User Form-->
     <div class="row">
@@ -36,7 +37,9 @@
         </form>
     </div>
     <!--User List Display-->
-    <div th:fragment = "content" id="list">
+    <div th:fragment="content" id="list">
+        <fieldset>
+            <legend>Users</legend>
         <div class="userbox" th:each="user : ${users}">
             <!--User Info-->
             <div class="row">
@@ -50,7 +53,7 @@
                             <option th:value="${role.name}" th:text="${role.name}"></option>
                         </div>
                     </select>
-                    <button class="col-sm-4 js-assignRole">Assign Role</button>
+                    <button class="col-sm-4 js-assignRole">Assign</button>
                 </div>
             </div>
             <!--Table of Roles, if User has roles-->
@@ -71,6 +74,7 @@
                 </tbody>
             </table>
         </div>
+        </fieldset>
     </div>
 </div>
 <script th:src="@{/js/jquery-3.1.1.min.js}" src="../../public/js/jquery-3.1.1.min.js"></script>

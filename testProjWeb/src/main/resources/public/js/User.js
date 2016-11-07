@@ -39,7 +39,10 @@ UserController.prototype.assignRole = function () {
         url:"/users/" + selectedUserId,
         method: "POST",
         data: "role=" + selectedRole,
-        cache:false
+        cache:false,
+        success: function(pResult){
+            $("#list").html(pResult);
+        }
     })
 };
 
@@ -47,5 +50,5 @@ var userController = new UserController();
 
 $('#submit').on("click",userController.saveUser);
 $('#filter-button').on("click",userController.setFilter);
-$('.js-assignRole').on("click",userController.assignRole);
+$('body').on("click",".js-assignRole",userController.assignRole);
 
